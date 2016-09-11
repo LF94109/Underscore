@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>underscore函数的学习</title>
+    <script src="underscore.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    <!--reduce是用来数组合并的-->
+    //underscore所有的函数都是通过_.方法名称()来进行调用的
+    //他封装了跟第一哦函数式的工具方法，主要应用于移动端的操作
+    //相比JQ，它的体积更小，运算速度更快
+
+    var sum = _.reduce([1,2,3,4,5],function(memo,num){
+        //console.log(memo);
+        return memo + num;
+    },0)
+    //console.log(sum)
+
+    //查询元素，退回第一个符合条件的元素 _.find
+
+    var sum = _.find([1,2,3,4,5],function(num){
+        return num % 2 == 0;
+    })
+    //console.log(sum);
+
+    //_.filter , 退回所有的符合条件的元素
+    var sum = _.filter([1,2,3,4,5,6],function(num){
+        return num % 2 == 0;
+    })
+    //console.log(sum)
+
+    //_.where , 查询符合条件的数组元素
+    var list = [
+        {name:'zlf',year:1993},
+        {name:'tom',year:1988},
+        {name:'roy',year:1986},
+        {name:'lzy',year:1982}
+    ]
+    //console.log(_.where(list,{year:1993}))
+
+    //_.contains ,判断是否存在某一个具体的元素
+    //有的话返回true，没有返回false
+    //console.log(_.contains([1,2,3,4],5))
+    //写个伪代码
+    /*function contains(list,value){
+        //数组是list，要查询的值是value
+        for(var index in list){
+            //console.log(list[index]);
+            if(list[index] === value){
+                return true;
+            }else{
+                continue;
+            }
+        }
+        return false;
+    }
+    console.log(contains([1,2,3,4],5));*/
+
+    //提取，返回数组元素中的对应的属性值 _.pluck
+    var list = [
+        {name:'zlf',year:1993},
+        {name:'tom',year:1988},
+        {name:'roy',year:1986},
+        {name:'lzy',year:1982}
+    ]
+    //console.log(_.pluck(list,'year'))
+    //最大值
+    //console.log(_.max(list,function(list){return list.year}));
+    //最小值
+    var num = [2,3,4,50,70];
+    //console.log(_.min(num));
+
+    //排序
+    //console.log(_.sortBy([5,4,3,2,1]));
+
+    function sort(array){
+        //排序算法
+        //冒泡排序
+        var len = array.length;
+        var i;
+        var j;
+        var temp;
+        var result;
+        result = array.slice(0);
+        for(i =0;i<len;i++){
+            for(j=len-1;j>i;j--){
+                if(result[j] < result[j-1]){
+                    temp = result[j-1];
+                    result[j-1] = result[j];
+                    result[j] = temp;
+                }
+            }
+        }
+        return result;
+    }
+   // console.log(sort([2,1,3,5,4]))
+
+    //把一切不是数组的东西变成数组
+    var result = (function(){
+        return _.toArray(arguments).slice(1)
+    })(1,2,3,4)
+    //console.log(result)
+
+    //返回长度
+    var list = [1,2,3,4,5,6];
+    var obj = {
+        name:'zlf',
+        age:23,
+        city:'郑州'
+    };
+    //console.log(_.size(list))
+    //console.log(_.size(obj))
+
+    //元素的位置
+    console.log(_.first([5,1,2,3,14,52]))
+    console.log(_.last([5,1,2,3,14,52]))
+    console.log(_.initial([5,1,2,3,4]))
+    console.log(_.rest([1,2,7,8,9]))
+
+    //获取元素的索引位置
+    //原生的获取索引值的方法，indexOf()获取索引值，indexOf的参数是数组当中的元素
+    /*if(Array.prototype.indexOf){
+        alert('存在')
+    }*/
+    //JQ中获取下标值 index()来获取下标值的
+    //console.log(_.indexOf([1,2,3,4,5,6],4));
+    //console.log(_.indexOf(['wo','xi','huan','ni',5,2,1],'huan'));
+    //lastIndexof()返回最后一个元素的下标
+    //console.log(_.lastIndexOf(['huan','wo','huan','xi','huan','ni',5,2,1],'huan'));
+
+    var list = [10,20,50,40];
+    //console.log(_.sortedIndex(list,35));
+    //console.log(_.sortBy(list));
+
+    //去除false值， '' , 0,null,undefined都为false，其余都为true
+    var sum = ['',0,'0',null,undefined,false];
+    //console.log(_.compact(sum));
+
+    //对多维数进行转化
+    console.log(_.flatten([[1],[2],[[[3]]]]));
+
+    //1=>a,2=>b,3=>c,4=>d,5=>e...26=>z,27=>aa,28=>ab,......
+
+    //生成随机数，第一个参数start，第二个参数end，第三个参数step
+    //console.log(_.range(0,10,2));
+
+    //合并数组
+    //console.log(_.zip(['name','age','city'],['zlf',23,'郑州']));
+    //[['name','zlf'],['age',23],['city','郑州']]
+
+    //转化数组为对象
+    //console.log(_.object(['aaa','bbb','ccc'],[10,20,30]));
+    //Object {aaa: 10, bbb: 20, ccc: 30}
+
+
+    //改变this的指向
+    /*var name = 'ttt';//window.name = 'ttt'
+    function test(greeting){
+        alert(greeting + ":" + this.name)
+    }
+    var obj ={
+        name:'朱林峰'
+    }
+    test.call(obj,'我是')*/
+
+    //多少毫秒以后调用这个函数
+    _.delay(function(){
+        //alert(1)
+    },1000)
+
+    //after
+    var nums = [1,2,3,4];
+    var dosomething = _.after(nums.length,function(){
+        //console.log('listen  i am last');
+    })
+    _.each(nums,function(num){
+        console.log('each:' + num);
+        dosomething();
+    })
+
+    //before
+    //函数调用的次数进行限制，限制函数在调用的时候，在规定的次数范围内
+    function dosomething(){
+        alert(1)
+    }
+    var test = _.before(3,dosomething);
+    test();
+
+    //在函数的外边再包裹一层函数，确保在外层的函数被执行后，再执行此函数
+   /* var hello = function(name){
+        return 'hello' + name
+    }
+    hello = _.wrap(hello,function(func){
+        return 'before ' + func('zlf') + ' after'
+    })
+    console.log(hello());*/
+
+   //key获取属性值
+    var obj = {
+        name:'zlf',
+        age:23
+    }
+    console.log(_.keys(obj))
+    //allkeys可以获取到原型链里边的属性
+
+    //获取属性值
+    console.log(_.values({name:'zlf',age:23}))
+
+    //用在对象上的map方法，  mapObject
+    console.log(_.mapObject({start:10,end:30},function(val){
+        return val + 10;
+    }));
+
+    //将对象转化为数组形式
+    console.log(_.pairs({name:'tt',age:23}))
+
+    //对象的复制
+    console.log(_.extend({name:'zlf'},{age:23}))
+
+    //不会覆盖原有的属性
+    console.log(_.defaults({name:'tom'},{name:'jack',city:'Canada'}))
+
+    //判断一下对象是否相等
+    var obj1 = {name:'aa'}
+    var obj2 = {name:'aa'}
+    console.log(_.isEqual(obj1,obj2))
+
+    //$在JQ中已经被占用了，在underscore中用  _
+
+    //生成随机数
+    console.log(_.random(100,200))
+
+    //例子(过滤)偶数
+    function find(arr){
+        var arr1 = []
+        for(var i = 0;i< arr.length;i++){
+            if(arr[i] % 2 == 0){
+                arr1.push(arr[i]);
+            }
+        }
+        return console.log(arr1)
+    }
+    find([0,1,2,3,4,5,10,21,45,50,98,73,14]);
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
